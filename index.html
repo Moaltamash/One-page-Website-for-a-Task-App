@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Manage Your Tasks Smarter</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            color: #172033;
+            background: #ffffff;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        /* Navigation */
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 0;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: 800;
+            color: #6554e8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            align-items: center;
+        }
+
+        .nav-links a:hover {
+            color: #6554e8;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #6554e8;
+            color: white;
+            padding: 13px 24px;
+            border-radius: 9px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #4c3acb;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+
+        .hero {
+            background: linear-gradient(135deg, #f1efff, #f9f8ff);
+            padding: 95px 20px 85px;
+            text-align: center;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #e4e0ff;
+            color: #5544d6;
+            padding: 7px 15px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 6vw, 65px);
+            line-height: 1.15;
+            max-width: 850px;
+            margin: 0 auto 22px;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 span {
+            color: #6554e8;
+        }
+
+        .hero p {
+            max-width: 620px;
+            margin: 0 auto 30px;
+            color: #667085;
+            font-size: 18px;
+        }
+
+        .hero-note {
+            margin-top: 18px;
+            font-size: 13px;
+            color: #667085;
+        }
+
+        /* General Sections */
+
+        section {
+            padding: 85px 0;
+        }
+
+        .section-heading {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-heading h2 {
+            font-size: clamp(29px, 4vw, 40px);
+            margin-bottom: 12px;
+        }
+
+        .section-heading p {
+            color: #667085;
+            max-width: 580px;
+            margin: auto;
+        }
+
+        /* Features */
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .feature-card {
+            padding: 32px 26px;
+            border: 1px solid #e9e8f2;
+            border-radius: 16px;
+            transition: 0.3s;
+            background: white;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 15px 35px #33257c12;
+        }
+
+        .feature-icon {
+            width: 58px;
+            height: 58px;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: #efedff;
+            font-size: 28px;
+            margin-bottom: 22px;
+        }
+
+        .feature-card h3 {
+            font-size: 21px;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: #667085;
+        }
+
+        /* Reviews */
+
+        .reviews {
+            background: #f8f7ff;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .review-card {
+            background: white;
+            padding: 28px;
+            border-radius: 15px;
+            border: 1px solid #eceaf8;
+        }
+
+        .stars {
+            color: #f5a623;
+            letter-spacing: 3px;
+            margin-bottom: 16px;
+        }
+
+        .review-card blockquote {
+            color: #4b5565;
+            margin-bottom: 24px;
+        }
+
+        .user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar {
+            width: 43px;
+            height: 43px;
+            border-radius: 50%;
+            background: #e5e0ff;
+            display: grid;
+            place-items: center;
+            font-weight: bold;
+            color: #5140cb;
+        }
+
+        .user p {
+            font-size: 13px;
+            color: #667085;
+        }
+
+        /* Pricing */
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .price-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 32px 26px;
+            position: relative;
+            background: white;
+        }
+
+        .price-card.popular {
+            border: 2px solid #6554e8;
+            box-shadow: 0 12px 35px #6554e815;
+        }
+
+        .popular-label {
+            background: #6554e8;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            position: absolute;
+            top: -15px;
+            right: 20px;
+        }
+
+        .price-card h3 {
+            font-size: 23px;
+            margin-bottom: 8px;
+        }
+
+        .price-card .description {
+            color: #667085;
+            font-size: 14px;
+            min-height: 45px;
+        }
+
+        .price {
+            font-size: 39px;
+            font-weight: 800;
+            margin: 20px 0;
+        }
+
+        .price span {
+            font-size: 14px;
+            font-weight: normal;
+            color: #667085;
+        }
+
+        .price-card ul {
+            list-style: none;
+            margin: 20px 0 28px;
+        }
+
+        .price-card li {
+            padding: 9px 0;
+            color: #4b5565;
+            font-size: 14px;
+        }
+
+        .price-card li::before {
+            content: "✓";
+            color: #6554e8;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .price-card .btn {
+            text-align: center;
+            width: 100%;
+        }
+
+        .btn-outline {
+            background: white;
+            color: #6554e8;
+            border: 1px solid #6554e8;
+        }
+
+        .btn-outline:hover {
+            color: white;
+        }
+
+        /* Final CTA */
+
+        .cta {
+            background: #6554e8;
+            color: white;
+            text-align: center;
+            padding: 65px 20px;
+        }
+
+        .cta h2 {
+            font-size: clamp(28px, 4vw, 40px);
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: #e5e1ff;
+            margin-bottom: 25px;
+        }
+
+        .cta .btn {
+            background: white;
+            color: #5544d6;
+        }
+
+        /* Footer */
+
+        footer {
+            background: #151b2b;
+            color: white;
+            padding: 35px 0;
+        }
+
+        .footer-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        footer .logo {
+            color: white;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #d0d5e1;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: #aab2c2;
+            font-size: 13px;
+            margin-top: 25px;
+            text-align: center;
+            border-top: 1px solid #343b4d;
+            padding-top: 20px;
+        }
+
+        /* Scroll animation */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            * {
+                animation: none !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Responsive Design */
+
+        @media (max-width: 850px) {
+            .features-grid,
+            .reviews-grid,
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .price-card:last-child {
+                grid-column: 1 / -1;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 92%;
+            }
+
+            nav {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 17px;
+                font-size: 14px;
+            }
+
+            .hero {
+                padding: 70px 15px;
+            }
+
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .features-grid,
+            .reviews-grid,
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price-card:last-child {
+                grid-column: auto;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="container">
+        <nav>
+            <a href="#" class="logo">✦ TaskFlow</a>
+
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#reviews">Reviews</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#contact" class="btn">Get Started</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="reveal">
+                <span class="tag">✨ Your productivity partner</span>
+
+                <h1>Less stress.<br>More <span>getting things done.</span></h1>
+
+                <p>
+                    Meet TaskFlow — the simple, smart way to organize your
+                    tasks, manage your time, and achieve your goals every day.
+                </p>
+
+                <a href="#pricing" class="btn">Start Organizing for Free →</a>
+
+                <div class="hero-note">
+                    ✓ Easy to use &nbsp; ✓ Stay organized &nbsp; ✓ Work smarter
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <h2>Everything you need to stay productive</h2>
+                    <p>
+                        Powerful features, a simple interface, and less time
+                        worrying about what you need to do next.
+                    </p>
+                </div>
+
+                <div class="features-grid">
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">📋</div>
+                        <h3>Smart Task Management</h3>
+                        <p>
+                            Create tasks, set deadlines, and organize your
+                            daily work in one easy-to-use place.
+                        </p>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">📅</div>
+                        <h3>Plan Your Day</h3>
+                        <p>
+                            Keep track of upcoming deadlines and plan your
+                            schedule so nothing important gets missed.
+                        </p>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">🤝</div>
+                        <h3>Team Collaboration</h3>
+                        <p>
+                            Share tasks, coordinate projects, and work
+                            together to reach your goals faster.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Section -->
+        <section class="reviews" id="reviews">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <h2>Loved by productive people</h2>
+                    <p>
+                        A sample of what users might say about their
+                        TaskFlow experience.
+                    </p>
+                </div>
+
+                <div class="reviews-grid">
+                    <article class="review-card reveal">
+                        <div class="stars">★★★★★</div>
+                        <blockquote>
+                            "TaskFlow helps me organize my college assignments
+                            and keep track of deadlines. My days feel much
+                            more manageable!"
+                        </blockquote>
+                        <div class="user">
+                            <div class="avatar">A</div>
+                            <div>
+                                <strong>Alex Morgan</strong>
+                                <p>College Student</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="review-card reveal">
+                        <div class="stars">★★★★★</div>
+                        <blockquote>
+                            "I used to forget small tasks all the time.
+                            Now everything is organized in one place.
+                            Simple and effective!"
+                        </blockquote>
+                        <div class="user">
+                            <div class="avatar">S</div>
+                            <div>
+                                <strong>Sarah Lee</strong>
+                                <p>Freelancer</p>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="review-card reveal">
+                        <div class="stars">★★★★★</div>
+                        <blockquote>
+                            "The clean design and task planning make it
+                            easier for our team to stay focused and
+                            understand our priorities."
+                        </blockquote>
+                        <div class="user">
+                            <div class="avatar">J</div>
+                            <div>
+                                <strong>James Wilson</strong>
+                                <p>Project Manager</p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing Section -->
+        <section id="pricing">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <h2>Simple, transparent pricing</h2>
+                    <p>
+                        Choose the plan that fits your workflow.
+                        Start free and upgrade whenever you're ready.
+                    </p>
+                </div>
+
+                <div class="pricing-grid">
+
+                    <article class="price-card reveal">
+                        <h3>Free</h3>
+                        <p class="description">
+                            For personal tasks and everyday planning.
+                        </p>
+                        <div class="price">₹0 <span>/ forever</span></div>
+
+                        <ul>
+                            <li>Up to 50 tasks</li>
+                            <li>Basic task organization</li>
+                            <li>Daily planning</li>
+                            <li>Personal workspace</li>
+                        </ul>
+
+                        <a href="#contact" class="btn btn-outline">
+                            Get Started
+                        </a>
+                    </article>
+
+                    <article class="price-card popular reveal">
+                        <span class="popular-label">MOST POPULAR</span>
+                        <h3>Pro</h3>
+                        <p class="description">
+                            For individuals who want to do more.
+                        </p>
+                        <div class="price">₹299 <span>/ month</span></div>
+
+                        <ul>
+                            <li>Unlimited tasks</li>
+                            <li>Advanced task planning</li>
+                            <li>Priority management</li>
+                            <li>Productivity reports</li>
+                        </ul>
+
+                        <a href="#contact" class="btn">
+                            Choose Pro
+                        </a>
+                    </article>
+
+                    <article class="price-card reveal">
+                        <h3>Team</h3>
+                        <p class="description">
+                            For teams working toward shared goals.
+                        </p>
+                        <div class="price">₹799 <span>/ month</span></div>
+
+                        <ul>
+                            <li>Everything in Pro</li>
+                            <li>Team collaboration</li>
+                            <li>Shared project boards</li>
+                            <li>Team task management</li>
+                        </ul>
+
+                        <a href="#contact" class="btn btn-outline">
+                            Choose Team
+                        </a>
+                    </article>
+
+                </div>
+
+                <p style="text-align:center; color:#667085; font-size:13px; margin-top:25px;">
+                    Fictional example pricing for this demo website.
+                </p>
+            </div>
+        </section>
+
+        <!-- Call To Action -->
+        <section class="cta reveal">
+            <h2>Ready to take control of your day?</h2>
+            <p>Start with a clear plan and make every task count.</p>
+            <a href="#pricing" class="btn">Explore Plans →</a>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <a href="#" class="logo">✦ TaskFlow</a>
+
+                <div class="footer-links">
+                    <a href="mailto:hello@taskflow.example">✉ Contact Us</a>
+                    <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
+                    <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
+                    <a href="https://x.com/" target="_blank" rel="noopener noreferrer">𝕏 Twitter</a>
+                </div>
+            </div>
+
+            <div class="copyright">
+                © 2026 TaskFlow. All rights reserved.
+                Built with ❤️ to make life more organized.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Reveal sections and cards as they enter the screen
+        const revealElements = document.querySelectorAll(".reveal");
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.12
+            });
+
+            revealElements.forEach(element => {
+                observer.observe(element);
+            });
+        } else {
+            revealElements.forEach(element => {
+                element.classList.add("visible");
+            });
+        }
+    </script>
+
+</body>
+</html>
